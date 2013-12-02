@@ -24,9 +24,16 @@ xfconf = Gio.DBusProxy.new_sync(
 
 result = xfconf.call_sync('GetAllProperties', GLib.Variant('(ss)', ('xfce4-panel', '')), 0, -1, None)
 
-props = [(k,v) for k,v in result[0].items()]
-props.sort()
 
-for k,v in props:
-    print(k,repr(v))
+props = result.get_child_value(0)
+
+for n in range(props.n_children()):
+    p = props.get_child_value(n)
+    pp = p.get_child_value(0).get_string()
+    pv = p.get_child_value(1).get_variant()
+
+    pn = GLib.Variant.parse(None, str(pv), None, None)
+    assert(pv == pn)
+
+    print(pp, pv)
 

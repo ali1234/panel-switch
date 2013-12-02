@@ -2,7 +2,7 @@
 
 import gi.repository
 from gi.repository import Gio, GLib
-import sys
+import sys, os
 
 session_bus = Gio.BusType.SESSION
 cancellable = None
@@ -23,14 +23,18 @@ xfconf = Gio.DBusProxy.new_sync(
      interface,
      cancellable)
 
-#try:
-#    result = xfconf.call_sync('ResetProperty', GLib.Variant('(ssb)', ('xfce4-panel', '/', True)), 0, -1, None)
-#except:
-#    pass
+os.system('killall xfce4-panel')
+
+try:
+    result = xfconf.call_sync('ResetProperty', GLib.Variant('(ssb)', ('xfce4-panel', '/', True)), 0, -1, None)
+except:
+    pass
 
 f = open(sys.argv[1])
 
 for line in f:
     x = line.strip().split(' ', 1)
     print(x)
-    result = xfconf.call_sync('SetProperty', GLib.Variant('(ssv)', ('xfce4-panel', x[0], GLib.Variant('(s)', (x[1],) ))), 0, -1, None)
+    result = xfconf.call_sync('SetProperty', GLib.Variant('(ssv)', ('xfce4-panel', x[0], GLib.Variant.parse(None, x[1], None, None))), 0, -1, None)
+
+os.system('cd ~ && xfce4-panel &')
