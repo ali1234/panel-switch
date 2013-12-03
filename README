@@ -1,6 +1,8 @@
 
 Configuration switcher for xfce4-panel
 
+This is alpha-quality software. Backup your ~/.config/xfce4 before using this.
+
 Usage:
 
 panelconfig.py save <filename>
