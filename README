@@ -3,9 +3,7 @@ Configuration switcher for xfce4-panel
 
 Usage:
 
-panelconfig.py
-
-panel-switcher.py save <filename>
+panelconfig.py save <filename>
 
 Writes the current configuration of the panel into a tar file. If filename
 ends with .bz2 or .gz, then the respective compression will be used.
@@ -13,7 +11,7 @@ ends with .bz2 or .gz, then the respective compression will be used.
 If the current panel configuration contains launcher, and those launcher
 name .desktop files, those .desktop files will also be added to the tar file.
 
-panel-switcher.py load <filename>
+panelconfig.py load <filename>
 
 This will load back the configuration from the named tar file. It will kill
 the running panel before loading the configuration, and restart it afterwards.
