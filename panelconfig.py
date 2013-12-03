@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+# * Configuration switcher for xfce4-panel
+# *
+# * Copyright 2013 Alistair Buxton <a.j.buxton@gmail.com>
+# *
+# * License: This program is free software; you can redistribute it and/or
+# * modify it under the terms of the GNU General Public License as published
+# * by the Free Software Foundation; either version 3 of the License, or (at
+# * your option) any later version. This program is distributed in the hope
+# * that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
+# * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# * GNU General Public License for more details.
 
 from gi.repository import Gio, GLib
 import tarfile
@@ -131,10 +142,11 @@ if __name__=='__main__':
          cancellable)
 
     if len(sys.argv) != 3 or sys.argv[1] not in ['load', 'save']:
-        print("""Panel Switch v0.1 - Usage:
-panelconfig.py save <filename> : save current configuration.
-panelconfig.py load <filename> : load configuration from file.
-""")
+        print('Panel Switch v0.1 - Usage:')
+        print(sys.argv[0]+' save <filename> : save current configuration.')
+        print(sys.argv[0]+' load <filename> : load configuration from file.')
+        print('')
+        exit(-1)
 
     if sys.argv[1] == 'save':
         PanelConfig.from_xfconf(xfconf).to_file(sys.argv[2])
