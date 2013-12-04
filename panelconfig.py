@@ -19,6 +19,13 @@ import os
 
 from os.path import expanduser
 
+# yes, python 3.2 has exist_ok, but it will still fail if the mode is different
+def mkdir_p(path):
+    try:
+        os.makedirs(path, exist_ok=True)
+    except FileExistsError:
+        pass
+
 def add_to_tar(t, bytes, arcname):
     ti = tarfile.TarInfo(name=arcname)
     ti.size = len(bytes)
@@ -108,9 +115,11 @@ class PanelConfig(object):
         for (pp,pv) in sorted(self.properties.items()):
             result = xfconf.call_sync('SetProperty', GLib.Variant('(ssv)', ('xfce4-panel', pp, pv)), 0, -1, None)
 
+        panel_path = expanduser("~")+'/.config/xfce4/panel/'
         for d in self.desktops:
             bytes = self.get_desktop_source_file(d).read()
-            f = open(expanduser("~")+'/.config/xfce4/panel/'+d, 'wb')
+            mkdir_p(panel_path+os.path.dirname(d))
+            f = open(panel_path+d, 'wb')
             f.write(bytes)
             f.close()
 
